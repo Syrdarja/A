@@ -4,6 +4,7 @@ let page;
 
 beforeEach(async () => {
   page = await browser.newPage();
+  await page.goto("http://qamid.tmweb.ru/client/index.php");
   await page.setDefaultNavigationTimeout(50000);
 });
 
@@ -12,11 +13,8 @@ afterEach(() => {
 });
 
 describe("Let's go to the cinema tests", () => {
-  beforeEach(async () => {
-    // page = await browser.newPage();
-    await page.goto("http://qamid.tmweb.ru/client/index.php");
-  });
-    
+ 
+
   test("Booking for last the Witcher should be successful", async () => {
     await clickElement(page, "a:nth-child(7)");
     await clickElement(page, "[data-seance-id='223']");
@@ -24,7 +22,7 @@ describe("Let's go to the cinema tests", () => {
     expect(actual).toContain("Ведьмак");
   });
    
-  test("Book button is inactive", async () => {
+  test("Booking several tickets", async () => {
     await clickElement(page, "a:nth-child(5)");
     await clickElement(page, "[data-seance-id='218']");
     await page.waitForSelector(".buying__info-title", {
@@ -35,7 +33,7 @@ describe("Let's go to the cinema tests", () => {
     await clickElement(page, "div:nth-child(6) span:nth-child(7)");
     await clickElement(page, ".acceptin-button");
     const actual = await getText(page, ".ticket__check-title");
-    expect(actual).toContain("Вы выбрали билеты:"); 
+    expect(actual).toContain("Вы выбрали билеты:");
   });
 
   test("Book button is inactive", async () => {
